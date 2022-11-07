@@ -1,0 +1,45 @@
+{
+  "name": "@yesiree/edward",
+  "version": "0.1.0",
+  "description": "A word processor",
+  "main": "./dist/cjs/index.js",
+  "types": "index.d.ts",
+  "browser": "./dist/edward.min.js",
+  "module": "./dist/esm/index.js",
+  "scripts": {
+    "prepublish": "npm run build",
+    "test": "echo \"Not yet implemented\"",
+    "build": "rollup -c rollup.build.config.js",
+    "serve": "rollup -w -c rollup.watch.config.js",
+    "start": "npm run serve"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yesiree/edward.git"
+  },
+  "keywords": [
+    "editor",
+    "markdown",
+    "web"
+  ],
+  "author": "Trevor Reed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yesiree/edward/issues"
+  },
+  "homepage": "https://github.com/yesiree/edward#readme",
+  "devDependencies": {
+    "rollup": "^2.75.6",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.32.1",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.3"
+  }
+}

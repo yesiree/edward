@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+
+  <head>
+    <style>
+       :root {
+        --back: #333;
+        --fore: #aaa;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: auto;
+      }
+
+      body {
+        padding: 24px;
+        background: var(--back);
+        color: var(--fore);
+      }
+
+      main {
+        margin: 24px;
+        padding: 24px;
+        border: solid 1px #888;
+        position: relative;
+      }
+
+      .cursor {
+        background: var(--fore);
+        height: 1em;
+        width: 2px;
+        position: absolute;
+        z-index: 99;
+        animation-duration: 800ms;
+        animation-name: blink;
+        animation-iteration-count: infinite;
+      }
+
+      .tall {
+        line-height: 2em;
+      }
+
+      .highlight {
+        border: solid 1px yellow;
+      }
+
+      strike {
+        font-size: 3em;
+      }
+
+      @keyframes blink {
+        from {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <main>
+    <h1>Hello & Welcome!</h1>
+    <p>
+      This is a <em>very</em> interesting story about <strong>BOLD</strong> character.
+    </p>
+    <p class="tall">
+      Some paragraphs are just too long <strike>to fit on one line. Because of that</strike>, they have to be <strong><em>wrapped</em></strong> onto a second or third or fourth line or as many lines as it takes. We just keep wrapping and wrapping and
+      wrapping until everything fits.
+    </p>
+    <p>
+      This is <strike>NOT</strike> very interesting.
+    </p>
+    <span>Spans are just inline elements, but they can also wrap when necessary and if the text goes on long enough to reach the end of the line and then continue onto the next line and possibly even the line after that and so on and so forth.</span>
+    <div class="cursor"></div>
+  </main>
+  <script>
+    console.clear()
+
+    const main = document.querySelector('main')
+    const mainRect = main.getBoundingClientRect()
+    const cursor = document.querySelector('.cursor')
+
+    main.addEventListener('mousedown', e => {
+      const x = e.pageX - mainRect.x
+      const y = e.pageY - mainRect.y
+      const target = document.elementFromPoint(e.pageX, e.pageY)
+      const styles = window.getComputedStyle(target)
+
+      const lineHeight = parseInt(styles.lineHeight === 'normal' ? styles.fontSize : styles.lineHeight)
+
+      const targetRect = target.getBoundingClientRect()
+      const relativeY = e.pageY - targetRect.y
+      const cursorY = Math.floor(relativeY / lineHeight) * lineHeight + targetRect.y - mainRect.y
+      const cursorX = e.pageX - mainRect.x
+      const fontSize = parseInt(styles.fontSize)
+
+      cursor.style.top = `calc(${cursorY}px + ${(lineHeight - fontSize) / 2}px)`
+      cursor.style.left = `${cursorX}px`
+      cursor.style.height = `${fontSize}px`
+
+      document
+        .querySelectorAll('.highlight')
+        .forEach(x => x.classList.remove('highlight'))
+      target.classList.add('highlight')
+
+    }, true)
+
+    main.addEventListener('keydown', e => {
+      e.preventDefault()
+
+    }, true)
+  </script>
+
+</html>
